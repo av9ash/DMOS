@@ -51,7 +51,7 @@ func2()
 
 int main()
 {
-	initQ(&Q);
+	InitQ(&Q);
 	start_thread(func1);
 	start_thread(func2);
 	start_thread(func3);

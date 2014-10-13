@@ -6,15 +6,15 @@
 extern TCB_t * Q;
 void start_thread(void *function)
 {
-	printf("Inside start thread....\n");
+	//printf("Inside start thread....\n");
 	int stack_size = 8192;
 	void *stack = malloc(stack_size);
 	TCB_t *tcb = malloc(sizeof(TCB_t));
-	printf("Address of TCB:%p\n",tcb);
-	init_TCB(&tcb,function,&stack,stack_size);
+	//printf("Address of TCB:%p\n",tcb);
+	init_TCB(tcb,function,&stack,stack_size);
 	
 	//call addQ to add this TCB into the “RunQ” which is a global header pointer
-	enq(Q,tcb);
+	AddQ(Q,tcb);
 }
 
 
@@ -28,8 +28,7 @@ void run()
 
 void yield() // similar to run
 {
-	printf("yielded");
-	rotate(Q);
+	RotateQ(Q);
 	run();
    //rotate the run Q;
    //swap the context, from previous thread to the thread pointed to by runQ

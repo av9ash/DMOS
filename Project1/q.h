@@ -2,14 +2,14 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-initQ(TCB_t ** head)
+InitQ(TCB_t ** head)
 {
-	*head=(TCB_t *)malloc(1*sizeof(TCB_t));
-	(*head)->next = *head; (*head)-> prev = *head;
-	printf("Head Node:%p",*head);
+        *head=(TCB_t *)malloc(1*sizeof(TCB_t));
+        (*head)->next = *head; (*head)-> prev = *head;
+        //printf("Head Node:%p",*head);
 }
 
-enq( TCB_t * head,TCB_t * tcb)
+AddQ( TCB_t * head,TCB_t * tcb)
 {
 	//TCB_t * new_node = malloc(sizeof(TCB_t));
 	//new_node-> data = num;
@@ -21,12 +21,12 @@ enq( TCB_t * head,TCB_t * tcb)
 	tcb->next = head;
 	head-> prev = tcb;
 	//printf("New TCB inserted at address%p with u_context address %p:",tcb,tcb->context);
-	printf("New node prev address:%p\n",tcb->prev);	
-	printf("New node address:%p\n",tcb);
-	printf("New node next address:%p\n",tcb->next);
+	//printf("New node prev address:%p\n",tcb->prev);	
+	//printf("New node address:%p\n",tcb);
+	//printf("New node next address:%p\n",tcb->next);
 }
 
- TCB_t * deq( TCB_t * head)
+TCB_t * DelQ( TCB_t * head)
 {
 	TCB_t *cur = head-> next;
 	TCB_t *cur_next = cur->next;
@@ -45,21 +45,22 @@ void display( TCB_t * head)
 		cur=cur->next;
 		printf("%p -> ", cur);
 	}
+	printf("\n");
 }
 
-void rotate( TCB_t * head)
+void RotateQ( TCB_t * head)
 {
 	if(head->next->next !=head && head->next !=head){
 		TCB_t * cur = head->next;
 		while(cur->next != head){
 			cur = cur->next;
 		}
-		TCB_t * ret = deq(head);
+		TCB_t * ret = DelQ(head);
 		cur->next = ret;
 		ret->prev = cur;
 		ret->next = head;
 		head->prev = ret;
-		display(head);
+		//display(head);
 	}
 }
 	
