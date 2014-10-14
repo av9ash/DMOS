@@ -4,14 +4,14 @@
 #include<stdlib.h>
 
 extern TCB_t * Q;
-void start_thread(void *function)
+void start_thread(void (*function)(void))
 {
 	//printf("Inside start thread....\n");
 	int stack_size = 8192;
 	void *stack = malloc(stack_size);
-	TCB_t *tcb = malloc(sizeof(TCB_t));
+	TCB_t *tcb = (TCB_t *) malloc(sizeof(TCB_t));
 	//printf("Address of TCB:%p\n",tcb);
-	init_TCB(tcb,function,&stack,stack_size);
+	init_TCB(tcb,function,stack,stack_size);
 	
 	//call addQ to add this TCB into the “RunQ” which is a global header pointer
 	AddQ(Q,tcb);

@@ -8,7 +8,7 @@ Project #1: Allow a program to run, with multiple threads, using NON-preemptive 
 
 TCB_t * Q;
 
-func1()
+void func1()
 {
 	printf("function  1 running...\n");
 	int i;
@@ -23,7 +23,7 @@ func1()
 	} 
 }
 
-func2()
+void func2()
 {
         printf("function  2 running...\n");
         int i;
@@ -36,7 +36,8 @@ func2()
                 }
                 //yield on some condition
         }
-}func3()
+}
+void func3()
 {
         printf("function  3 running...\n");
         int i;
@@ -52,12 +53,17 @@ func2()
 }
 
 
-int main()
+void main()
 {
 	InitQ(&Q);
-	start_thread(func1);
-	start_thread(func2);
-	start_thread(func3);
+	void (*fun1)();
+	fun1 = &func1;
+	start_thread(fun1);
+	void (*fun2)();
+        fun2 = &func2;
+	start_thread(fun2);
+	void (*fun3)();
+        fun3 = &func3;
+	start_thread(fun3);
 	run();
-	return 0;
 }
