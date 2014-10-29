@@ -5,6 +5,7 @@ Project #1: Allow a program to run, with multiple threads, using NON-preemptive 
 */
 
 #include"threads.h"
+#include <unistd.h>
 
 TCB_t * Q;
 
@@ -16,7 +17,7 @@ void func1()
 		printf("%d\n",i);
 		sleep(1);
 		if(i==10){
-			printf("function1  yielding ....\n");
+			printf("function1 %d yielding ....\n",getpid());
 			yield();
 		}
 		//yield on some condition

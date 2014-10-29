@@ -28,6 +28,7 @@ void run()
 
 void yield() // similar to run
 {
+	printf("yielding");
 	RotateQ(Q);
 	run();
    //rotate the run Q;
