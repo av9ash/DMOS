@@ -17,7 +17,7 @@ void func1()
 		printf("%d\n",i);
 		sleep(1);
 		if(i==10){
-			printf("function1 %d yielding ....\n",getpid());
+			printf("function1 yielding ....\n");
 			yield();
 		}
 		//yield on some condition
@@ -59,12 +59,12 @@ void main()
 	InitQ(&Q);
 	void (*fun1)();
 	fun1 = &func1;
-	start_thread(fun1);
+	start_thread(func1);
 	void (*fun2)();
         fun2 = &func2;
-	start_thread(fun2);
+	start_thread(func2);
 	void (*fun3)();
         fun3 = &func3;
-	start_thread(fun3);
+	start_thread(func3);
 	run();
 }

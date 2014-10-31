@@ -28,9 +28,12 @@ void run()
 
 void yield() // similar to run
 {
-	printf("yielding");
+	ucontext_t parent;     // get a place to store the main context, for faking
+	getcontext(&parent);   // magic sauce
+	Q->next->context = parent;
 	RotateQ(Q);
-	run();
+	swapcontext(&parent, &(Q->next->context));
+	//run();
    //rotate the run Q;
    //swap the context, from previous thread to the thread pointed to by runQ
 }
