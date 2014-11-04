@@ -125,12 +125,7 @@ int main()
 	start_thread(reader);
 	start_thread(reader);
 	start_thread(reader);
-	start_thread(reader);
-	start_thread(reader);
 	start_thread(writer);
-	start_thread(writer);
-	start_thread(reader);
-	start_thread(reader);
 	start_thread(writer);
 	
 	
