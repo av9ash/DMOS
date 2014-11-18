@@ -1,3 +1,8 @@
+/*******************************************************************/
+/*      CSE 531 Distributed Multiprocessor Operating Systems       */
+/*      Project 3 : Message passing via ports                      */
+/*      Group members: Nitesh Kedia,Tejas M U                      */
+/*******************************************************************/
 
 #include "msgs.h"
 
