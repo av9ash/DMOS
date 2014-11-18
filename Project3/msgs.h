@@ -35,7 +35,7 @@ void send(PORT *p, int *msg,int portnum)
 		p->msgs[p->in][i] = msg[i];
     }
 
-  	printf("Message sent to port %d at index: %d\n",portnum,p->in);
+  	//printf("Message sent to port %d at index: %d\n",portnum,p->in);
 	p->in = ((p->in)+1)%10;
     V(&p->mutex);
 }
@@ -51,7 +51,7 @@ void receive(PORT *p, int *msg,int portnum)
   		msg[i]=p->msgs[p->out][i];
   	}
 
-  	printf("Message read from port %d at index: %d\n",portnum,p->out);
+  	//printf("Message read from port %d at index: %d\n",portnum,p->out);
   	p->out = ((p->out)+1)%10;
     V(&p->mutex);
 }

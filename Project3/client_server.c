@@ -4,31 +4,52 @@
 int a[] = {0,1,2,3,4};
 TCB_t * Q;
 
+void printSend(int *a,int client,int clientId,int port) {
+ int i =0;
+
+ char c = ' ';
+ if(client == 1) c ='C';
+ else c ='S';
+
+ printf("Sending... from %c%d on %d  :",c,clientId,port);
+ for(i=0;i<10;i++) {
+  a[i] = i+(clientId+1)*10;
+  printf("%d ",a[i]);
+ }
+ printf("\n"); 
+}
+
+void printRecv(int *a,int client,int clientId,int port) {
+ int i = 0 ;
+ char c = ' ';
+ if(client == 1) c ='C';
+ else c ='S';
+
+ printf("\t\t\t\t\t\t\tReceived... by %c%d on %d  :",c,clientId,port);
+ for(i=0;i<10;i++) {
+  printf("%d ",a[i]);
+}
+ printf("\n");
+}
+
 void client()
 {
 while(1){
   P(&p[99].empty);
   int a[10];
-  int i=0;
-  printf("\nClient 0: Sending \n");
-  for(i=0;i<10;i++) { 
-  a[i]=i;
-  printf("%d\t", a[i]); 
-  }
-  printf("\n");
-
+  printSend(a,1,0,99);
   send(&p[99], a,99);
-  printf("\n");
   printf("Client 0: Send success\n");
   sleep(1);
   V(&p[99].full);
   P(&p[0].full);
   int b[10];
   receive(&p[0],b,0);
-  printf("\nClient 0: Receive success\n");
+  printRecv(b,1,0,0);
+  printf("\n");
   sleep(1);
   V(&p[0].empty);
-  printf("*******************************************************************\n");
+  
 }
 }
 
@@ -37,14 +58,7 @@ void client1()
 while(1){
   P(&p[99].empty);
   int a[10];
-  int i=0;
-  printf("\nClient 1: Sending \n");
-  for(i=0;i<10;i++) { 
-  a[i]=i+20;
-  printf("%d\t", a[i]); 
-  }
-  printf("\n");
-
+  printSend(a,1,1,99);
   send(&p[99], a,99);
   printf("Client 1: Send success\n");
   sleep(1);
@@ -52,13 +66,9 @@ while(1){
   P(&p[0].full);
   int b[10];
   receive(&p[0],b,0);
-  printf("Client 1: Receive \n");
-  for(i=0;i<10;i++)
-  printf("%d\t", b[i]);
-  printf("\nClient 1: Receive success\n");
+  printRecv(b,1,1,0);
   sleep(1);
   V(&p[0].empty);
-  printf("*******************************************************************\n");
 }
 }
 
@@ -66,35 +76,18 @@ void server()
 {
 while(1){
   P(&p[99].full);
-  printf("Server: Receiving \n");
   int a[10];
   receive(&p[99],a,99);
+  printRecv(a,0,0,99);
   int i=0;
- 
-  for(i=0;i<10;i++)
-  printf("%d\t", a[i]);
-  printf("\nServer: Receive Success \n");
   sleep(1);
   V(&p[99].empty);
-  //yield();
-  printf("server 0 started waiting for port 0\n");
   P(&p[0].empty);
-  printf("Server: Sending \n");
-  for(i=0;i<10;i++) {
-  a[i]+=10;
-  printf("%d\t", a[i]);
-  }
-  printf("\n");
-  
+  printSend(a,0,0,0);
   send(&p[0], a,0);
-  for(i=0;i<10;i++)
-  //printf("value of index %d",p[0].in]);
-  printf("%d\t", p[0].msgs[p[0].in-1][i]);
-  printf("\n");
-  printf("Server: Send success");
+  printf("Server 0: Send success\n");
   sleep(1);
   V(&p[0].full);
-  //yield();
 }
 }
 
